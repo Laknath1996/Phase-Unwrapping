@@ -26,7 +26,7 @@ image_datagen = ImageDataGenerator(**data_gen_args)
 mask_datagen = ImageDataGenerator(**data_gen_args)
 seed = 1
 image_generator = image_datagen.flow_from_directory(
-    'dataset/coco/pwrap/',
+    '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/',
     target_size=(512,512),
     color_mode='grayscale',
     class_mode=None,
@@ -34,7 +34,7 @@ image_generator = image_datagen.flow_from_directory(
     batch_size=4)
 
 mask_generator = mask_datagen.flow_from_directory(
-    'dataset/coco/orig',
+    '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig',
     target_size=(512,512),
     color_mode='grayscale',
     class_mode=None,
@@ -102,7 +102,7 @@ model = Model(input = inputs, output = conv10)
 model.compile(optimizer = Adam(lr = 1e-4), loss = 'binary_crossentropy', metrics = ['accuracy'])
 model.summary()
 model_checkpoint = ModelCheckpoint('PU_unet_001.hdf5', monitor='loss', verbose=1, save_best_only=True)
-tb = TensorBoard(log_dir='./logs', batch_size=4, write_graph=True, write_images=True)
+tb = TensorBoard(log_dir='/home/563/ls1729/gdata/phase_unwrapping/logs', batch_size=4, write_graph=True, write_images=True)
 model.fit_generator(
     train_generator,
     steps_per_epoch=100,
