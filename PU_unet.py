@@ -19,6 +19,19 @@ from keras.callbacks import ModelCheckpoint, LearningRateScheduler,TensorBoard
 import keras.backend as K
 K.set_image_data_format('channels_last')
 
+#Define Parameters
+IMG_HEIGHT = 512
+IMG_WIDTH = 512
+BATCH_SIZE = 4
+LEARNING_RATE = 1e-4
+LOSS = 'binary_crossentropy'
+STEPS_PER_EPOCH = 100
+EPOCHS = 100
+IMAGE_DIR = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/'
+MASK_DIR = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/'
+WEIGHT_DIR = '/home/563/ls1729/gdata/phase_unwrapping/PU_unet_001.hdf5'
+TB_LOG_DIR = '/home/563/ls1729/gdata/phase_unwrapping/logs'
+
 
 # create two instances with the same arguments
 data_gen_args = dict(rescale=1./255)
@@ -26,20 +39,20 @@ image_datagen = ImageDataGenerator(**data_gen_args)
 mask_datagen = ImageDataGenerator(**data_gen_args)
 seed = 1
 image_generator = image_datagen.flow_from_directory(
-    '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/',
-    target_size=(512,512),
+    IMAGE_DIR,
+    target_size=(IMG_HEIGHT,IMG_WIDTH),
     color_mode='grayscale',
     class_mode=None,
     seed=seed,
-    batch_size=4)
+    batch_size=BATCH_SIZE)
 
 mask_generator = mask_datagen.flow_from_directory(
-    '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig',
-    target_size=(512,512),
+    MASK_DIR,
+    target_size=(IMG_HEIGHT,IMG_WIDTH),
     color_mode='grayscale',
     class_mode=None,
     seed=seed,
-    batch_size=4)
+    batch_size=BATCH_SIZE)
 
 # combine generators into one which yields image and masks
 train_generator = zip(image_generator, mask_generator)
@@ -99,14 +112,14 @@ model = Model(inputs = inputs, outputs = conv10)
 # train the model
 print('Fitting Model...')
 model = Model(input = inputs, output = conv10)
-model.compile(optimizer = Adam(lr = 1e-4), loss = 'binary_crossentropy', metrics = ['accuracy'])
+model.compile(optimizer = Adam(lr = LEARNING_RATE), loss = LOSS, metrics = ['accuracy'])
 model.summary()
-model_checkpoint = ModelCheckpoint('/home/563/ls1729/gdata/phase_unwrapping/PU_unet_001.hdf5', monitor='loss', verbose=1, save_best_only=True)
-tb = TensorBoard(log_dir='/home/563/ls1729/gdata/phase_unwrapping/logs', batch_size=4, write_graph=True, write_images=True)
+model_checkpoint = ModelCheckpoint(WEIGHT_DIR, monitor='loss', verbose=1, save_best_only=True)
+tb = TensorBoard(log_dir=TB_LOG_DIR, batch_size=BATCH_SIZE, write_graph=True, write_images=True)
 model.fit_generator(
     train_generator,
-    steps_per_epoch=100,
-    epochs=100,
+    steps_per_epoch=STEPS_PER_EPOCH,
+    epochs=EPOCHS,
     verbose=1,
     callbacks=[model_checkpoint, tb])
 
