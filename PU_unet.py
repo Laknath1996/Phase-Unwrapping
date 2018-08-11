@@ -101,7 +101,7 @@ print('Fitting Model...')
 model = Model(input = inputs, output = conv10)
 model.compile(optimizer = Adam(lr = 1e-4), loss = 'binary_crossentropy', metrics = ['accuracy'])
 model.summary()
-model_checkpoint = ModelCheckpoint('PU_unet_001.hdf5', monitor='loss', verbose=1, save_best_only=True)
+model_checkpoint = ModelCheckpoint('/home/563/ls1729/gdata/phase_unwrapping/PU_unet_001.hdf5', monitor='loss', verbose=1, save_best_only=True)
 tb = TensorBoard(log_dir='/home/563/ls1729/gdata/phase_unwrapping/logs', batch_size=4, write_graph=True, write_images=True)
 model.fit_generator(
     train_generator,
