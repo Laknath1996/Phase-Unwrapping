@@ -2,6 +2,7 @@
 # U-Net based phase unwrapping model
 
 # import libraries
+print('Importing the Libraries..')
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 from keras import layers
@@ -18,15 +19,22 @@ from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler,TensorBoard
 import keras.backend as K
 K.set_image_data_format('channels_last')
+import os
+from skimage import io
+from skimage import data, img_as_float, color, exposure
+from skimage.transform import resize
+import numpy as np
+import matplotlib.pyplot as plt
 
 #Define Parameters
 IMG_HEIGHT = 512
 IMG_WIDTH = 512
+IMG_CHANNELS = 1
 BATCH_SIZE = 4
 LEARNING_RATE = 1e-4
 LOSS = 'binary_crossentropy'
 STEPS_PER_EPOCH = 100
-EPOCHS = 100
+EPOCHS = 5
 IMAGE_DIR = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/'
 MASK_DIR = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/'
 WEIGHT_DIR = '/home/563/ls1729/gdata/phase_unwrapping/PU_unet_001.hdf5'
@@ -34,7 +42,11 @@ TB_LOG_DIR = '/home/563/ls1729/gdata/phase_unwrapping/logs'
 
 
 # create two instances with the same arguments
-data_gen_args = dict(rescale=1./255)
+print('Loading the Datasets...')
+data_gen_args = dict(rescale=1./255,
+                     validation_split=0.2,
+                     featurewise_center=False,
+                     featurewise_std_normalization=False)
 image_datagen = ImageDataGenerator(**data_gen_args)
 mask_datagen = ImageDataGenerator(**data_gen_args)
 seed = 1
@@ -111,7 +123,6 @@ model = Model(inputs = inputs, outputs = conv10)
 
 # train the model
 print('Fitting Model...')
-model = Model(input = inputs, output = conv10)
 model.compile(optimizer = Adam(lr = LEARNING_RATE), loss = LOSS, metrics = ['accuracy'])
 model.summary()
 model_checkpoint = ModelCheckpoint(WEIGHT_DIR, monitor='loss', verbose=1, save_best_only=True)
@@ -122,6 +133,35 @@ model.fit_generator(
     epochs=EPOCHS,
     verbose=1,
     callbacks=[model_checkpoint, tb])
+
+#predict
+print('Making Predictions on the Test Set...')
+images = io.imread_collection('dataset/coco/test/*.jpg')
+out_path = 'dataset/coco/results'
+X_test = np.zeros(len(images.files), IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS), dtype=np.uint8)
+n = 0
+for fn in images.files:
+    img = io.imread(fn)[:,:,:IMG_CHANNELS]
+    X_test[n] = img
+    n += 1
+
+model = load_model(WEIGHT_DIR)
+preds_test = model.predict(X_test, verbose=1)
+preds_test = (preds_test*255).astype(np.uint8)
+
+for i in range(0,len(preds_test)):
+    file = os.path.split(image.files[i])[1]
+    path = os.path.join(out_path, file)
+    plt.imsave(path, np.squeeze(preds_test[i]), cmap='gray')
+
+print('Complete..!') 
+
+
+
+
+
+
+
 
 
 
