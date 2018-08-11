@@ -138,7 +138,7 @@ model.fit_generator(
 print('Making Predictions on the Test Set...')
 images = io.imread_collection('/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/test/*.jpg')
 out_path = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/results'
-X_test = np.zeros(len(images.files), IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS), dtype=np.uint8)
+X_test = np.zeros((len(images.files), IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS), dtype=np.uint8)
 n = 0
 for fn in images.files:
     img = io.imread(fn)[:,:,:IMG_CHANNELS]
