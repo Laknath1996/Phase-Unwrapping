@@ -37,7 +37,7 @@ STEPS_PER_EPOCH = 100
 EPOCHS = 100
 IMAGE_DIR = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/'
 MASK_DIR = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/'
-WEIGHT_DIR = '/home/563/ls1729/gdata/phase_unwrapping/weights/PU_unet_001.hdf5'
+WEIGHT_DIR = '/home/563/ls1729/gdata/phase_unwrapping/weights/PU_unet_002.hdf5'
 TB_LOG_DIR = '/home/563/ls1729/gdata/phase_unwrapping/logs'
 
 
