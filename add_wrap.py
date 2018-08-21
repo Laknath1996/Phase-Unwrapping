@@ -13,7 +13,7 @@ import argparse
 
 # pass some arguments
 parser = argparse.ArgumentParser(description='Create training, validating and testing datasets with desired phase wraps.')
-parser.add_argument('--rescale_interval',nargs='+', type=, default=[-10, 10],
+parser.add_argument('--rescale_interval',nargs='+', type=int, default=[-10, 10],
                     help='Specify the rescaling interval')
 parser.add_argument('--shape', nargs='+', type=int, default=[512, 512],
                     help='Specify the shape of the image as (width, height)')
