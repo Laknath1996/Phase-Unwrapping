@@ -2,7 +2,9 @@
 # phase simulator
 
 import numpy as np
-from matplotlib import pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import cv2
 from skimage import data, img_as_float, color, exposure
 from skimage.restoration import unwrap_phase
