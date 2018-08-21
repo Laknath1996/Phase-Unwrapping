@@ -3,13 +3,7 @@
 
 # import the libraries
 
-from random import shuffle
 import glob
-from utilities import *
-from utilities import _bytes_feature
-import tensorflow as tf
-import sys
-import matplotlib.pyplot as plt
 import numpy as np
 import h5py
 import cv2
