@@ -6,36 +6,41 @@ from matplotlib import pyplot as plt
 import cv2
 from skimage import data, img_as_float, color, exposure
 from skimage.restoration import unwrap_phase
+import h5py
 
-# create a random matrix between -10 and 10
+# useful params
+PWRAP_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/orig_dataset.hdf5'
+ORIGINAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/pwrap_dataset.hdf5'
+ARB = 25
 
-np.random.seed(0)
-size = [160, 160]
-phase_image = np.random.randn(160, 160)
-phase_image = exposure.rescale_intensity(phase_image, out_range=(-10, 10))
+# load the dataset
+orig_dataset = h5py.File(ORIGINAL_DATASET_PATH, "r")
+orig_train_images = orig_dataset["train_img"]
+orig_train_images = np.array(orig_train_images, dtype=np.float32)
 
-# introduce a wrap
+pwrap_dataset = h5py.File(PWRAP_DATASET_PATH, "r")
+pwrap_train_images = pwrap_dataset["train_img"]
+pwrap_train_images = np.array(pwrap_train_images, dtype=np.float32)
 
-wrapped_phase_image = np.arctan2(np.sin(phase_image), np.cos(phase_image))
+size = (np.size(orig_train_images, 1), np.size(orig_train_images, 2))
 
-# unwrap the phase from the scikit-image
+# select an arbitrary image
+im_orig = orig_train_images[ARB, :, :, :]
+im_orig = np.reshape(im_orig, size)
 
-unwrapped_phase_image = unwrap_phase(wrapped_phase_image)
+im_pwrap = pwrap_train_images[ARB, :, :, :]
+im_pwrap = np.reshape(im_pwrap, size)
 
 # plot the results
 
-fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
+fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
 ax1, ax2, ax3 = ax.ravel()
 
-fig.colorbar(ax1.imshow(phase_image, cmap='gray'), ax=ax1)
-ax1.set_title('Original')
+fig.colorbar(ax1.imshow(im_orig, cmap='gray'), ax=ax1)
+ax1.set_title('Original Image')
 
-fig.colorbar(ax2.imshow(wrapped_phase_image, cmap='gray'),
+fig.colorbar(ax2.imshow(im_pwrap, cmap='gray'),
              ax=ax2)
-ax2.set_title('Wrapped phase')
+ax2.set_title('Wrapped phase Image')
 
-fig.colorbar(ax3.imshow(unwrapped_phase_image, cmap='gray'),
-             ax=ax3)
-ax3.set_title('Unwrapped phase')
-
-plt.show()
+plt.savefig('check.jpg')
