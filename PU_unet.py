@@ -32,12 +32,12 @@ IMG_WIDTH = 512
 IMG_CHANNELS = 1
 BATCH_SIZE = 4
 LEARNING_RATE = 1e-4
-LOSS = 'binary_crossentropy'
+LOSS = 'mean_squared_logarithmic_error'
 STEPS_PER_EPOCH = 100
-EPOCHS = 1
+EPOCHS = 100
 IMAGE_DIR = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/'
 MASK_DIR = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/'
-WEIGHT_DIR = '/home/563/ls1729/gdata/phase_unwrapping/PU_unet_001.hdf5'
+WEIGHT_DIR = '/home/563/ls1729/gdata/phase_unwrapping/weights/PU_unet_002.hdf5'
 TB_LOG_DIR = '/home/563/ls1729/gdata/phase_unwrapping/logs'
 
 
@@ -136,9 +136,9 @@ model.fit_generator(
 
 #predict
 print('Making Predictions on the Test Set...')
-images = io.imread_collection('dataset/coco/test/*.jpg')
-out_path = 'dataset/coco/results'
-X_test = np.zeros(len(images.files), IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS), dtype=np.uint8)
+images = io.imread_collection('/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/test/*.jpg')
+out_path = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/results'
+X_test = np.zeros((len(images.files), IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS), dtype=np.uint8)
 n = 0
 for fn in images.files:
     img = io.imread(fn)[:,:,:IMG_CHANNELS]
@@ -147,10 +147,10 @@ for fn in images.files:
 
 model = load_model(WEIGHT_DIR)
 preds_test = model.predict(X_test, verbose=1)
-preds_test = (preds_test*255).astype(np.uint8)
+preds_test = preds_test*255
 
 for i in range(0,len(preds_test)):
-    file = os.path.split(image.files[i])[1]
+    file = os.path.split(images.files[i])[1]
     path = os.path.join(out_path, file)
     plt.imsave(path, np.squeeze(preds_test[i]), cmap='gray')
 
