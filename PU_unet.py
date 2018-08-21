@@ -149,7 +149,7 @@ model = load_model(WEIGHT_DIR)
 preds_test = model.predict(X_test, verbose=1)
 preds_test = preds_test*255
 
-for i in range(0,len(preds_test)):
+for i in range(0, len(preds_test)):
     file = os.path.split(images.files[i])[1]
     path = os.path.join(out_path, file)
     plt.imsave(path, np.squeeze(preds_test[i]), cmap='gray')
