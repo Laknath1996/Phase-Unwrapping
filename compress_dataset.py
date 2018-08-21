@@ -1,5 +1,5 @@
 # author : Ashwin de Silva
-# compress the datatset in to a TFRecord format
+# compress the datatset in to a hdf5 format
 
 # import the libraries
 
@@ -16,8 +16,8 @@ import cv2
 
 # define some useful parameters
 
-IMAGES_PATH = 'data/brain/*.jpg'
-DATASET_PATH = 'natural_dataset.hdf5'
+IMAGES_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/images/*.jpg'
+DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/natural_dataset.hdf5'
 SIZE = (512, 512)
 
 # read addresses and labels from the 'train' folder
