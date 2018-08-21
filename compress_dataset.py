@@ -37,7 +37,7 @@ dataset_file.create_dataset("test_img", test_shape, np.int8)
 # loop over train addresses
 for i in range(len(train_addrs)):
     # print how many images are saved every 1000 images
-    if i % 1000 == 0 and i > 1:
+    if i % 500 == 0 and i > 1:
         print('Train data: {}/{}'.format(i, len(train_addrs)))
     # read an image and resize
     addr = train_addrs[i]
@@ -51,7 +51,7 @@ for i in range(len(train_addrs)):
 # loop over validation addresses
 for i in range(len(val_addrs)):
     # print how many images are saved every 1000 images
-    if i % 1000 == 0 and i > 1:
+    if i % 500 == 0 and i > 1:
         print('Validation data: {}/{}'.format(i, len(val_addrs)))
     # read an image and resize
     addr = val_addrs[i]
@@ -65,7 +65,7 @@ for i in range(len(val_addrs)):
 # loop over the test addresses
 for i in range(len(test_addrs)):
     # print how many images are saved every 1000 images
-    if i % 1000 == 0 and i > 1:
+    if i % 500 == 0 and i > 1:
         print('Test data: {}/{}'.format(i, len(test_addrs)))
     # read an image and resize to (224, 224)
     # cv2 load images as BGR, convert it to RGB
