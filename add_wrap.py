@@ -74,7 +74,7 @@ for i in range(train_shape[0]):
     im = np.reshape(im, SIZE)
 
     if i % 500 == 0 and i > 1:
-        print('Train data: {}/{}'.format(i, len(train_shape[0])))
+        print('Train data: {}/{}'.format(i, train_shape[0]))
 
     # rescale the pixel values
     im = exposure.rescale_intensity(im, out_range=INTENSITY_RESCALE_WINDOW)
@@ -92,7 +92,7 @@ for i in range(val_shape[0]):
     im = np.reshape(im, SIZE)
 
     if i % 500 == 0 and i > 1:
-        print('Validation data: {}/{}'.format(i, len(val_shape[0])))
+        print('Validation data: {}/{}'.format(i, val_shape[0]))
 
     # rescale the pixel values
     im = exposure.rescale_intensity(im, out_range=INTENSITY_RESCALE_WINDOW)
@@ -109,7 +109,7 @@ for i in range(test_shape[0]):
     im = np.reshape(im, SIZE)
 
     if i % 500 == 0 and i > 1:
-        print('Test data: {}/{}'.format(i, len(val_shape[0])))
+        print('Test data: {}/{}'.format(i, val_shape[0]))
 
     # rescale the pixel values
     im = exposure.rescale_intensity(im, out_range=INTENSITY_RESCALE_WINDOW)
