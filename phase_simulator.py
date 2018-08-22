@@ -11,8 +11,8 @@ from skimage.restoration import unwrap_phase
 import h5py
 
 # useful params
-PWRAP_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/pwrap_dataset.hdf5'
-ORIGINAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/orig_dataset.hdf5'
+PWRAP_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/pwrap_dataset.hdf5'
+ORIGINAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/orig_dataset.hdf5'
 ARB = 25
 
 # load the dataset
