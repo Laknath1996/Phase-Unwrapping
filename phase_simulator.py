@@ -29,9 +29,11 @@ size = (np.size(orig_train_images, 1), np.size(orig_train_images, 2))
 # select an arbitrary image
 im_orig = orig_train_images[ARB, :, :, :]
 im_orig = np.reshape(im_orig, size)
+im_orig = np.array(im_orig, np.uint8)
 
 im_pwrap = pwrap_train_images[ARB, :, :, :]
 im_pwrap = np.reshape(im_pwrap, size)
+im_pwrap = np.array(im_pwrap, np.uint8)
 
 # plot the results
 
