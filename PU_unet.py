@@ -118,20 +118,20 @@ print('Making predictions on train, val and test sets...')
 
 # Predict on train, val and test
 model = load_model(WEIGHT_DIR)
-preds_train = model.predict(pwrap_train_images[:10, :, :, :], verbose=1)
-preds_val = model.predict(pwrap_val_images[:10, :, :, :], verbose=1)
-preds_test = model.predict(pwrap_test_images[:10, :, :, :], verbose=1)
+preds_train = model.predict(pwrap_train_images[:10], verbose=1)
+preds_val = model.predict(pwrap_val_images[:10], verbose=1)
+preds_test = model.predict(pwrap_test_images[:10], verbose=1)
 
 ix = random.randint(0, len(preds_test)-1)
 
-im_pwrap_train = np.reshape(pwrap_train_images[ix, :, :, :], (IMG_HEIGHT, IMG_WIDTH))
-im_res_train = np.reshape(preds_train[ix, :, :, :], (IMG_HEIGHT, IMG_WIDTH))
+im_pwrap_train = np.reshape(pwrap_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+im_res_train = np.reshape(preds_train[ix], (IMG_HEIGHT, IMG_WIDTH))
 
-im_pwrap_val = np.reshape(pwrap_val_images[ix, :, :, :], (IMG_HEIGHT, IMG_WIDTH))
-im_res_val = np.reshape(preds_val[ix, :, :, :], (IMG_HEIGHT, IMG_WIDTH))
+im_pwrap_val = np.reshape(pwrap_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+im_res_val = np.reshape(preds_val[ix], (IMG_HEIGHT, IMG_WIDTH))
 
-im_pwrap_test = np.reshape(pwrap_test_images[ix, :, :, :], (IMG_HEIGHT, IMG_WIDTH))
-im_res_test = np.reshape(preds_test[ix, :, :, :], (IMG_HEIGHT, IMG_WIDTH))
+im_pwrap_test = np.reshape(pwrap_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+im_res_test = np.reshape(preds_test[ix], (IMG_HEIGHT, IMG_WIDTH))
 
 print('Saving Results...')
 
@@ -149,7 +149,7 @@ ax1, ax2 = ax.ravel()
 fig.colorbar(ax1.imshow(im_pwrap_val, cmap='gray'), ax=ax1)
 ax1.set_title('Wrapped Image')
 fig.colorbar(ax2.imshow(im_res_val, cmap='gray'),
-             ax=ax2)
+             ax=ax2)scaler = MinMaxScaler()
 ax2.set_title('Unwrapped Image')
 plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/val_sample.jpg')
 
