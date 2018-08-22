@@ -149,7 +149,7 @@ ax1, ax2 = ax.ravel()
 fig.colorbar(ax1.imshow(im_pwrap_val, cmap='gray'), ax=ax1)
 ax1.set_title('Wrapped Image')
 fig.colorbar(ax2.imshow(im_res_val, cmap='gray'),
-             ax=ax2)scaler = MinMaxScaler()
+             ax=ax2)
 ax2.set_title('Unwrapped Image')
 plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/val_sample.jpg')
 
