@@ -38,7 +38,7 @@ im_pwrap = np.array(im_pwrap, np.uint8)
 # plot the results
 
 fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
-ax1, ax2, ax3 = ax.ravel()
+ax1, ax2 = ax.ravel()
 
 fig.colorbar(ax1.imshow(im_orig, cmap='gray'), ax=ax1)
 ax1.set_title('Original Image')
