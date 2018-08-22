@@ -6,6 +6,7 @@
 import cv2
 import numpy as np
 import tensorflow as tf
+import h5py
 
 
 # define the helper functions
@@ -27,4 +28,15 @@ def _bytes_feature(value):
     return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
 
 
+def load_h5py_datasets(PATH):
+
+    dataset = h5py.File(PATH, "r")
+    train_images = dataset["train_img"]
+    train_images = np.array(train_images, dtype=np.float32)
+    val_images = dataset["val_img"]
+    val_images = np.array(val_images, dtype=np.float32)
+    test_images = dataset["test_img"]
+    test_images = np.array(test_images, dtype=np.float32)
+
+    return train_images, val_images, test_images
 
