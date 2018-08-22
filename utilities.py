@@ -47,6 +47,6 @@ def load_h5py_datasets(PATH):
 
 def scaler(X, range):
     X_std = (X - np.min(X))/(np.max(X) - np.min(X))
-    X_scaled = X_std * (range(1) - range(0)) + range(0)
+    X_scaled = X_std * (range[1] - range[0]) + range[0]
     return X_scaled
 
