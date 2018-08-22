@@ -13,10 +13,6 @@ import argparse
 
 # pass some arguments
 parser = argparse.ArgumentParser(description='Create training, validating and testing datasets with desired phase wraps.')
-parser.add_argument('--rescale_interval',nargs='+', type=int, default=[-10, 10],
-                    help='Specify the rescaling interval')
-parser.add_argument('--shape', nargs='+', type=int, default=[512, 512],
-                    help='Specify the shape of the image as (width, height)')
 parser.add_argument('--nat_path', type=str,
                     help='Specify the path for the natural image dataset. These images are fresh and not intenisty rescaled.')
 parser.add_argument('--orig_path', type=str,
@@ -30,8 +26,8 @@ args = parser.parse_args()
 NATURAL_DATASET_PATH = args.nat_path  # '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/natural_dataset.hdf5'
 PWRAP_DATASET_PATH = args.pwrap_path  # '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/pwrap_dataset.hdf5'
 ORIGINAL_DATASET_PATH = args.orig_path
-INTENSITY_RESCALE_WINDOW = tuple(args.rescale_interval)
-SIZE = tuple(args.shape)
+INTENSITY_RESCALE_WINDOW = (-10, 10)
+SIZE = (512, 512)
 
 # print the args
 print('NATURAL_DATASET_PATH : ', NATURAL_DATASET_PATH)
