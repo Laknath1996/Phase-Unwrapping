@@ -38,9 +38,9 @@ def load_h5py_datasets(PATH):
     test_images = dataset["test_img"]
     test_images = np.array(test_images, dtype=np.float32)
 
-    train_images = scaler(train_images, (-1, 1))
-    val_images = scaler(val_images, (-1, 1))
-    test_images = scaler(test_images, (-1, 1))
+    # train_images = scaler(train_images, (-1, 1))
+    # val_images = scaler(val_images, (-1, 1))
+    # test_images = scaler(test_images, (-1, 1))
 
     return train_images, val_images, test_images
 
