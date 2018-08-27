@@ -78,13 +78,18 @@ for i in range(train_shape[0]):
 
     # rescale the pixel values
     im = exposure.rescale_intensity(im, out_range=INTENSITY_RESCALE_WINDOW)
-    im = np.reshape(im, (SIZE[0], SIZE[1], 1))
-    original_dataset_file["train_img"][i, ...] = im[None]
+    wrap_im = np.angle(np.exp(1j * im))
 
-    # wrap the pixel values between (-pi, pi)
-    im = np.angle(np.exp(1j * im))
-    # im = np.arctan2(np.sin(im), np.cos(im))
-    wrapped_dataset_file["train_img"][i, ...] = im[None]
+    # normalize and reshape the images
+    orig_im = exposure.rescale_intensity(im, out_range=(-1, 1))
+    wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
+    wrap_im = np.reshape(im, (SIZE[0], SIZE[1], 1))
+    orig_im = np.reshape(im, (SIZE[0], SIZE[1], 1))
+
+    # save the images in the h5 file
+    original_dataset_file["train_img"][i, ...] = orig_im[None]
+    wrapped_dataset_file["train_img"][i, ...] = wrap_im[None]
+
 
 print('saving the validation set with phase wraps')
 for i in range(val_shape[0]):
@@ -96,12 +101,17 @@ for i in range(val_shape[0]):
 
     # rescale the pixel values
     im = exposure.rescale_intensity(im, out_range=INTENSITY_RESCALE_WINDOW)
-    im = np.reshape(im, (SIZE[0], SIZE[1], 1))
-    original_dataset_file["val_img"][i, ...] = im[None]
-    # wrap the pixel values between (-pi, pi)
-    im = np.angle(np.exp(1j * im))
-    # im = np.arctan2(np.sin(im), np.cos(im))
-    wrapped_dataset_file["val_img"][i, ...] = im[None]
+    wrap_im = np.angle(np.exp(1j * im))
+
+    # normalize and reshape the images
+    orig_im = exposure.rescale_intensity(im, out_range=(-1, 1))
+    wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
+    wrap_im = np.reshape(im, (SIZE[0], SIZE[1], 1))
+    orig_im = np.reshape(im, (SIZE[0], SIZE[1], 1))
+
+    # save the images in the h5 file
+    original_dataset_file["val_img"][i, ...] = orig_im[None]
+    wrapped_dataset_file["val_img"][i, ...] = wrap_im[None]
 
 print('saving the test set with phase wraps')
 for i in range(test_shape[0]):
@@ -113,12 +123,17 @@ for i in range(test_shape[0]):
 
     # rescale the pixel values
     im = exposure.rescale_intensity(im, out_range=INTENSITY_RESCALE_WINDOW)
-    im = np.reshape(im, (SIZE[0], SIZE[1], 1))
-    original_dataset_file["test_img"][i, ...] = im[None]
-    # wrap the pixel values between (-pi, pi)
-    im = np.angle(np.exp(1j * im))
-    # im = np.arctan2(np.sin(im), np.cos(im))
-    wrapped_dataset_file["test_img"][i, ...] = im[None]
+    wrap_im = np.angle(np.exp(1j * im))
+
+    # normalize and reshape the images
+    orig_im = exposure.rescale_intensity(im, out_range=(-1, 1))
+    wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
+    wrap_im = np.reshape(im, (SIZE[0], SIZE[1], 1))
+    orig_im = np.reshape(im, (SIZE[0], SIZE[1], 1))
+
+    # save the images in the h5 file
+    original_dataset_file["test_img"][i, ...] = orig_im[None]
+    wrapped_dataset_file["test_img"][i, ...] = wrap_im[None]
 
 original_dataset_file.close()
 print('Complete!')
