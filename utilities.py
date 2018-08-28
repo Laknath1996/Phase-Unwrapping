@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import h5py
+import argparse
 
 
 # define the helper functions
@@ -49,4 +50,23 @@ def scaler(X, range):
     X_std = (X - np.min(X))/(np.max(X) - np.min(X))
     X_scaled = X_std * (range[1] - range[0]) + range[0]
     return X_scaled
+
+def get_args():
+    parser = argparse.ArgumentParser(description='Train the unet architecture')
+    parser.add_argument('--batch_size', type=int, default=8,
+                        help='Specify the batch size')
+    parser.add_argument('--loss', type=str, default='mean_squared_error',
+                        help='Specify the path loss function')
+    parser.add_argument('--epochs', type=int, default=100,
+                        help='Specify the number of epochs')
+    parser.add_argument('--pwrap_path', type=str,
+                        help='Specify the path of the pwrap dataset')
+    parser.add_argument('--orig_path', type=str,
+                        help='Specify the path of the orig dataset')
+    parser.add_argument('--weight_path', type=str,
+                        help='Specify the path for the weights to be saved')
+
+    args = parser.parse_args()
+
+    return args
 

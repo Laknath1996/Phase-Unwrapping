@@ -3,6 +3,9 @@
 
 # import libraries
 print('Importing the Libraries..')
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 from keras import layers
@@ -24,28 +27,14 @@ from skimage import io
 from skimage import data, img_as_float, color, exposure
 from skimage.transform import resize
 import numpy as np
-import matplotlib.pyplot as plt
 from utilities import *
 from unet_model import unet
 import argparse
 import random
+import sample_predict
 
 # parse some useful parameters
-parser = argparse.ArgumentParser(description='Train the unet architecture')
-parser.add_argument('--batch_size', type=int, default=8,
-                    help='Specify the batch size')
-parser.add_argument('--loss', type=str, default='mean_squared_error',
-                    help='Specify the path loss function')
-parser.add_argument('--epochs', type=int, default=100,
-                    help='Specify the number of epochs')
-parser.add_argument('--pwrap_path', type=str,
-                    help='Specify the path of the pwrap dataset')
-parser.add_argument('--orig_path', type=str,
-                    help='Specify the path of the orig dataset')
-parser.add_argument('--weight_path', type=str,
-                    help='Specify the path for the weights to be saved')
-
-args = parser.parse_args()
+args = get_args()
 
 #Define Parameters
 IMG_HEIGHT = 512
@@ -114,55 +103,9 @@ model.fit_generator(
 
 # predict
 
-print('Making predictions on train, val and test sets...')
+sample_predict(WEIGHT_DIR, pwrap_train_images, pwrap_val_images, pwrap_test_images, IMG_HEIGHT, IMG_WIDTH)
 
-# Predict on train, val and test
-model = load_model(WEIGHT_DIR)
-preds_train = model.predict(pwrap_train_images[:10], verbose=1)
-preds_val = model.predict(pwrap_val_images[:10], verbose=1)
-preds_test = model.predict(pwrap_test_images[:10], verbose=1)
 
-ix = random.randint(0, len(preds_test)-1)
-
-im_pwrap_train = np.reshape(pwrap_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_res_train = np.reshape(preds_train[ix], (IMG_HEIGHT, IMG_WIDTH))
-
-im_pwrap_val = np.reshape(pwrap_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_res_val = np.reshape(preds_val[ix], (IMG_HEIGHT, IMG_WIDTH))
-
-im_pwrap_test = np.reshape(pwrap_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_res_test = np.reshape(preds_test[ix], (IMG_HEIGHT, IMG_WIDTH))
-
-print('Saving Results...')
-
-fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
-ax1, ax2 = ax.ravel()
-fig.colorbar(ax1.imshow(im_pwrap_train, cmap='gray'), ax=ax1)
-ax1.set_title('Wrapped Image')
-fig.colorbar(ax2.imshow(im_res_train, cmap='gray'),
-             ax=ax2)
-ax2.set_title('Unwrapped Image')
-plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/train_sample.jpg')
-
-fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
-ax1, ax2 = ax.ravel()
-fig.colorbar(ax1.imshow(im_pwrap_val, cmap='gray'), ax=ax1)
-ax1.set_title('Wrapped Image')
-fig.colorbar(ax2.imshow(im_res_val, cmap='gray'),
-             ax=ax2)
-ax2.set_title('Unwrapped Image')
-plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/val_sample.jpg')
-
-fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
-ax1, ax2 = ax.ravel()
-fig.colorbar(ax1.imshow(im_pwrap_test, cmap='gray'), ax=ax1)
-ax1.set_title('Wrapped Image')
-fig.colorbar(ax2.imshow(im_res_test, cmap='gray'),
-             ax=ax2)
-ax2.set_title('Unwrapped Image')
-plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/test_sample.jpg')
-
-print('Complete..!') 
 
 
 
