@@ -31,7 +31,7 @@ from utilities import *
 from unet_model import unet
 import argparse
 import random
-import sample_predict
+
 
 # parse some useful parameters
 args = get_args()
@@ -101,9 +101,11 @@ model.fit_generator(
     verbose=1,
     callbacks=[model_checkpoint, tb, earlystopper])
 
+print('Training Complete!')
+
 # predict
 
-sample_predict(WEIGHT_DIR, pwrap_train_images, pwrap_val_images, pwrap_test_images, IMG_HEIGHT, IMG_WIDTH)
+#sample_predict(WEIGHT_DIR, pwrap_train_images, pwrap_val_images, pwrap_test_images, IMG_HEIGHT, IMG_WIDTH)
 
 
 
