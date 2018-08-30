@@ -91,7 +91,7 @@ model.compile(optimizer=Adam(lr=LEARNING_RATE), loss=LOSS, metrics=['accuracy'])
 model.summary()
 earlystopper = EarlyStopping(patience=PATIENCE, verbose=1)
 model_checkpoint = ModelCheckpoint(WEIGHT_DIR, monitor='loss', verbose=1, save_best_only=True)
-tb = TensorBoard(log_dir=TB_LOG_DIR, histogram_freq=5, write_grads=True, batch_size=BATCH_SIZE, write_graph=True, write_images=True)
+tb = TensorBoard(log_dir=TB_LOG_DIR, batch_size=BATCH_SIZE, write_graph=True, write_images=True)
 model.fit_generator(
     train_generator,
     validation_data=val_generator,
