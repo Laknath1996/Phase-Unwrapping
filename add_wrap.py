@@ -45,6 +45,7 @@ train_images = train_dataset["train_img"]
 train_images = np.array(train_images, dtype=np.float32)
 train_shape = (np.size(train_images, 0)*NO_WRAPS, np.size(train_images, 1), np.size(train_images, 2), np.size(train_images, 3))
 
+
 val_dataset = h5py.File(NATURAL_DATASET_PATH, "r")
 val_images = val_dataset["val_img"]
 val_images = np.array(val_images, dtype=np.float32)
@@ -75,12 +76,12 @@ HIGH = np.random.randint(1, INTENSITY_RESCALE_WINDOW[1]+1, NO_WRAPS)
 # add the phase wrap to the images
 print('saving the train set with phase wraps')
 k = 0
-for i in range(train_shape[0]):
+for i in range(train_shape[0]/NO_WRAPS):
     im = train_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
     #if i % 500 == 0 and i > 1:
-    print('Train data: {}/{}'.format(i, train_shape[0]/NO_WRAPS))
+    print('Train data: {}/{}'.format(i+1, train_shape[0]/NO_WRAPS))
 
     for j in range(NO_WRAPS):
         # rescale the pixel values
@@ -102,12 +103,12 @@ for i in range(train_shape[0]):
 
 print('saving the validation set with phase wraps')
 k = 0
-for i in range(val_shape[0]):
+for i in range(val_shape[0]/NO_WRAPS):
     im = val_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
     #if i % 500 == 0 and i > 1:
-    print('Validation data: {}/{}'.format(i, val_shape[0]/NO_WRAPS))
+    print('Validation data: {}/{}'.format(i+1, val_shape[0]/NO_WRAPS))
 
     for j in range(NO_WRAPS):
         # rescale the pixel values
@@ -129,12 +130,12 @@ for i in range(val_shape[0]):
 
 print('saving the test set with phase wraps')
 k = 0
-for i in range(test_shape[0]):
+for i in range(test_shape[0]/NO_WRAPS):
     im = test_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
     #if i % 500 == 0 and i > 1:
-    print('Test data: {}/{}'.format(i, val_shape[0]/NO_WRAPS))
+    print('Test data: {}/{}'.format(i+1, test_shape[0]/NO_WRAPS))
 
     for j in range(NO_WRAPS):
         # rescale the pixel values
