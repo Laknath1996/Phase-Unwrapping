@@ -76,7 +76,7 @@ HIGH = np.random.randint(1, INTENSITY_RESCALE_WINDOW[1]+1, NO_WRAPS)
 # add the phase wrap to the images
 print('saving the train set with phase wraps')
 k = 0
-for i in range(train_shape[0]/NO_WRAPS):
+for i in range(np.size(train_images, 0)):
     im = train_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
@@ -103,7 +103,7 @@ for i in range(train_shape[0]/NO_WRAPS):
 
 print('saving the validation set with phase wraps')
 k = 0
-for i in range(val_shape[0]/NO_WRAPS):
+for i in range(np.size(val_images, 0)):
     im = val_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
@@ -130,7 +130,7 @@ for i in range(val_shape[0]/NO_WRAPS):
 
 print('saving the test set with phase wraps')
 k = 0
-for i in range(test_shape[0]/NO_WRAPS):
+for i in range(np.size(test_images, 0)):
     im = test_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
