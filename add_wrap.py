@@ -91,7 +91,7 @@ for i in range(np.size(train_images, 0)):
 
         # normalize and reshape the images
         orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
-        wrap_im = exposure.rescale_intensity(wrap_im, out_range=(0, 1))
+        wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
         wrap_im = np.reshape(wrap_im, (SIZE[0], SIZE[1], 1))
         orig_im = np.reshape(orig_im, (SIZE[0], SIZE[1], 1))
 
@@ -118,7 +118,7 @@ for i in range(np.size(val_images, 0)):
 
         # normalize and reshape the images
         orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
-        wrap_im = exposure.rescale_intensity(wrap_im, out_range=(0, 1))
+        wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
         wrap_im = np.reshape(wrap_im, (SIZE[0], SIZE[1], 1))
         orig_im = np.reshape(orig_im, (SIZE[0], SIZE[1], 1))
 
@@ -145,7 +145,7 @@ for i in range(np.size(test_images, 0)):
 
         # normalize and reshape the images
         orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
-        wrap_im = exposure.rescale_intensity(wrap_im, out_range=(0, 1))
+        wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
         wrap_im = np.reshape(wrap_im, (SIZE[0], SIZE[1], 1))
         orig_im = np.reshape(orig_im, (SIZE[0], SIZE[1], 1))
 
