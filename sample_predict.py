@@ -38,6 +38,9 @@ preds_train = model.predict(pwrap_train_images[:10], verbose=1)
 preds_val = model.predict(pwrap_val_images[:10], verbose=1)
 preds_test = model.predict(pwrap_test_images[:10], verbose=1)
 
+# compute the error
+
+
 ix = random.randint(0, len(preds_test)-1)
 
 im_pwrap_train = np.reshape(pwrap_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))

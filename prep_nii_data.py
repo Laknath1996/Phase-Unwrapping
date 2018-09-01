@@ -18,8 +18,8 @@ parser.add_argument('--nat_path', type=str,
 args = parser.parse_args()
 
 # define some useful parameters
-NII_DATASET_PATH = args.nat_path
-NATURAL_DATASET_PATH = args.pwrap_path
+NII_DATASET_PATH = args.nii_path
+NATURAL_DATASET_PATH = args.nat_path
 SIZE = (512, 512)
 
 # print the args
