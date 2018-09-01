@@ -29,7 +29,7 @@ print('\n')
 
 # load the .nii images
 print('Loading the .nii data...')
-img = nib.load(NATURAL_DATASET_PATH)
+img = nib.load(NII_DATASET_PATH)
 data = img.get_fdata()
 data = np.array(data)
 
