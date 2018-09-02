@@ -25,8 +25,8 @@ IMG_HEIGHT = 512
 IMG_WIDTH = 512
 WEIGHT_DIR = args.weight_path  # '/home/563/ls1729/gdata/phase_unwrapping/weights/PU_unet_002.hdf5'
 PWRAP_DATASET_PATH = args.pwrap_path  # '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/pwrap_dataset.hdf5'
-UNWRAP_DATASET_PATH = args.orig_path
-SAVE_PATH = args.save_path # '/home/563/ls1729/gdata/phase_unwrapping/real_qsm_samples/sample.jpg'
+UNWRAP_DATASET_PATH = args.unwrap_path
+SAVE_PATH = args.save_path  # '/home/563/ls1729/gdata/phase_unwrapping/real_qsm_samples/sample.jpg'
 
 # load the datasets
 print('Loading the Datasets...')
