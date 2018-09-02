@@ -41,7 +41,7 @@ data_shape = (np.size(data, 2), SIZE[0], SIZE[1], 1)
 # open a hdf5 file and create earrays
 dataset_file = h5py.File(NATURAL_DATASET_PATH, mode='w')
 
-dataset_file.create_dataset("img", data_shape, np.int8)
+dataset_file.create_dataset("img", data_shape, np.float32)
 
 # loop over train addresses
 for i in range(data_shape[0]):
