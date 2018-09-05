@@ -7,6 +7,7 @@ import random
 from keras.models import *
 from utilities import load_h5py_datasets
 import argparse
+from skimage.restoration import unwrap_phase
 
 # parse some arguments
 parser = argparse.ArgumentParser(description='Predict sample using the trained model')
@@ -46,45 +47,54 @@ ix = random.randint(0, len(preds_test)-1)
 im_pwrap_train = np.reshape(pwrap_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_res_train = np.reshape(preds_train[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_orig_train = np.reshape(orig_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+im_ctrl_train = unwrap_phase(im_pwrap_train)
 
 im_pwrap_val = np.reshape(pwrap_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_res_val = np.reshape(preds_val[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_orig_val = np.reshape(orig_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+im_ctrl_val = unwrap_phase(im_pwrap_val)
 
 im_pwrap_test = np.reshape(pwrap_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_res_test = np.reshape(preds_test[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_orig_test = np.reshape(orig_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+im_ctrl_test = unwrap_phase(im_pwrap_test)
 
 print('Saving Results...')
 
-fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
-ax1, ax2, ax3 = ax.ravel()
+fig, ax = plt.subplots(2, 2, sharex=True, sharey=True)
+ax1, ax2, ax3, ax4 = ax.ravel()
 fig.colorbar(ax1.imshow(im_pwrap_train, cmap='gray'), ax=ax1)
 ax1.set_title('Wrapped Image')
 fig.colorbar(ax2.imshow(im_res_train, cmap='gray'), ax=ax2)
-ax2.set_title('Unwrapped Image')
+ax2.set_title('unet Unwrapped Image')
 fig.colorbar(ax3.imshow(im_orig_train, cmap='gray'), ax=ax3)
 ax3.set_title('Original Image')
+fig.colorbar(ax4.imshow(im_ctrl_train, cmap='gray'), ax=ax3)
+ax4.set_title('py Unwrapped Image')
 plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/train_sample.jpg')
 
-fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
-ax1, ax2, ax3 = ax.ravel()
+fig, ax = plt.subplots(2, 2, sharex=True, sharey=True)
+ax1, ax2, ax3, ax4 = ax.ravel()
 fig.colorbar(ax1.imshow(im_pwrap_val, cmap='gray'), ax=ax1)
 ax1.set_title('Wrapped Image')
 fig.colorbar(ax2.imshow(im_res_val, cmap='gray'), ax=ax2)
-ax2.set_title('Unwrapped Image')
+ax2.set_title('unet Unwrapped Image')
 fig.colorbar(ax3.imshow(im_orig_val, cmap='gray'), ax=ax3)
 ax3.set_title('Original Image')
+fig.colorbar(ax4.imshow(im_ctrl_train, cmap='gray'), ax=ax3)
+ax4.set_title('py Unwrapped Image')
 plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/val_sample.jpg')
 
-fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
-ax1, ax2, ax3 = ax.ravel()
+fig, ax = plt.subplots(2, 2, sharex=True, sharey=True)
+ax1, ax2, ax3, ax4 = ax.ravel()
 fig.colorbar(ax1.imshow(im_pwrap_test, cmap='gray'), ax=ax1)
 ax1.set_title('Wrapped Image')
 fig.colorbar(ax2.imshow(im_res_test, cmap='gray'), ax=ax2)
 ax2.set_title('Unwrapped Image')
 fig.colorbar(ax3.imshow(im_orig_test, cmap='gray'), ax=ax3)
 ax3.set_title('Original Image')
+fig.colorbar(ax4.imshow(im_ctrl_train, cmap='gray'), ax=ax3)
+ax4.set_title('py Unwrapped Image')
 plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/test_sample.jpg')
 
 print('Complete..!')
