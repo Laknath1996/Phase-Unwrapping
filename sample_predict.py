@@ -8,6 +8,7 @@ from keras.models import *
 from utilities import load_h5py_datasets
 import argparse
 from skimage.restoration import unwrap_phase
+from skimage import exposure
 
 # parse some arguments
 parser = argparse.ArgumentParser(description='Predict sample using the trained model')
@@ -47,17 +48,17 @@ ix = random.randint(0, len(preds_test)-1)
 im_pwrap_train = np.reshape(pwrap_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_res_train = np.reshape(preds_train[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_orig_train = np.reshape(orig_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_ctrl_train = np.reshape(unwrap_phase(pwrap_train_images[ix]),(IMG_HEIGHT, IMG_WIDTH))
+im_ctrl_train = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_train, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
 
 im_pwrap_val = np.reshape(pwrap_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_res_val = np.reshape(preds_val[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_orig_val = np.reshape(orig_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_ctrl_val = np.reshape(unwrap_phase(pwrap_val_images[ix]),(IMG_HEIGHT, IMG_WIDTH))
+im_ctrl_val = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_val, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
 
 im_pwrap_test = np.reshape(pwrap_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_res_test = np.reshape(preds_test[ix], (IMG_HEIGHT, IMG_WIDTH))
 im_orig_test = np.reshape(orig_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_ctrl_test = np.reshape(unwrap_phase(pwrap_test_images[ix]),(IMG_HEIGHT, IMG_WIDTH))
+im_ctrl_test = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_test, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
 
 print('Saving Results...')
 
