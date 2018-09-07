@@ -27,7 +27,7 @@ NATURAL_DATASET_PATH = args.nat_path  # '/home/563/ls1729/gdata/phase_unwrapping
 PWRAP_DATASET_PATH = args.pwrap_path  # '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/pwrap_dataset.hdf5'
 ORIGINAL_DATASET_PATH = args.orig_path
 INTENSITY_RESCALE_WINDOW = (-15, 15)
-NO_WRAPS = 50;
+NO_WRAPS = 100;
 SIZE = (512, 512)
 
 # print the args
