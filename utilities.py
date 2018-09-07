@@ -87,7 +87,7 @@ def write_images(data, flag):
 
     for i in range(n):
         im = data[i]
-        plt.imsave(dict[i], im, cmap='gray')
+        plt.imsave(''.join(['/home/563/ls1729/gdata/phase_unwrapping/samples/', dict[i], '.jpg']), im, cmap='gray')
 
 
 def compute_ssd(X, Y):
