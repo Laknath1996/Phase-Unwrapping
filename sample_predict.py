@@ -59,21 +59,21 @@ print('Train diff - unet : ', test_mean_diff)
 
 # get a random image to save
 ix = random.randint(0, len(preds_test)-1)
-train_results = np.zeros(5, IMG_WIDTH, IMG_HEIGHT)
+train_results = np.zeros((5, IMG_WIDTH, IMG_HEIGHT))
 train_results[1] = im_pwrap_train = np.reshape(pwrap_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 train_results[2] = im_res_train = np.reshape(preds_train[ix], (IMG_HEIGHT, IMG_WIDTH))
 train_results[3] = im_orig_train = np.reshape(orig_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 train_results[4] = im_ctrl_train = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_train, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
 train_results[5] = train_diff = im_orig_train - im_res_train
 
-val_results = np.zeros(5, IMG_WIDTH, IMG_HEIGHT)
+val_results = np.zeros((5, IMG_WIDTH, IMG_HEIGHT))
 val_results[1] = im_pwrap_val = np.reshape(pwrap_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 val_results[2] = im_res_val = np.reshape(preds_val[ix], (IMG_HEIGHT, IMG_WIDTH))
 val_results[3] = im_orig_val = np.reshape(orig_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 val_results[4] = im_ctrl_val = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_val, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
 val_results[5] = val_diff = im_orig_val - im_res_val
 
-test_results = np.zeros(5, IMG_WIDTH, IMG_HEIGHT)
+test_results = np.zeros((5, IMG_WIDTH, IMG_HEIGHT))
 test_results[1] = im_pwrap_test = np.reshape(pwrap_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 test_results[2] = im_res_test = np.reshape(preds_test[ix], (IMG_HEIGHT, IMG_WIDTH))
 test_results[3] = im_orig_test = np.reshape(orig_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
