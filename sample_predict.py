@@ -9,6 +9,7 @@ from utilities import load_h5py_datasets
 import argparse
 from skimage.restoration import unwrap_phase
 from skimage import exposure
+from utilities import *
 
 # parse some arguments
 parser = argparse.ArgumentParser(description='Predict sample using the trained model')
@@ -41,24 +42,43 @@ preds_val = model.predict(pwrap_val_images[:10], verbose=1)
 preds_test = model.predict(pwrap_test_images[:10], verbose=1)
 
 # compute the error
+train_SSD_unet = compute_ssd(preds_train, orig_train_images[:10])
+val_SSD_unet = compute_ssd(preds_val, orig_val_images[:10])
+test_SSD_unet = compute_ssd(preds_test, orig_test_images[:10])
 
+train_mean_diff = compute_diff(preds_train, orig_train_images[:10])
+val_mean_diff = compute_diff(preds_val, orig_val_images[:10])
+test_mean_diff = compute_diff(preds_test, orig_test_images[:10])
 
+print('Train SSD - unet : ', train_SSD_unet)
+print('Val SSD - unet : ', val_SSD_unet)
+print('Test SSD - unet : ', test_SSD_unet)
+print('Train diff - unet : ', train_mean_diff)
+print('Train diff - unet : ', val_mean_diff)
+print('Train diff - unet : ', test_mean_diff)
+
+# get a random image to save
 ix = random.randint(0, len(preds_test)-1)
+train_results = np.zeros(5, IMG_WIDTH, IMG_HEIGHT)
+train_results[1] = im_pwrap_train = np.reshape(pwrap_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+train_results[2] = im_res_train = np.reshape(preds_train[ix], (IMG_HEIGHT, IMG_WIDTH))
+train_results[3] = im_orig_train = np.reshape(orig_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+train_results[4] = im_ctrl_train = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_train, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
+train_results[5] = train_diff = im_orig_train - im_res_train
 
-im_pwrap_train = np.reshape(pwrap_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_res_train = np.reshape(preds_train[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_orig_train = np.reshape(orig_train_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_ctrl_train = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_train, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
+val_results = np.zeros(5, IMG_WIDTH, IMG_HEIGHT)
+val_results[1] = im_pwrap_val = np.reshape(pwrap_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+val_results[2] = im_res_val = np.reshape(preds_val[ix], (IMG_HEIGHT, IMG_WIDTH))
+val_results[3] = im_orig_val = np.reshape(orig_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+val_results[4] = im_ctrl_val = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_val, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
+val_results[5] = val_diff = im_orig_val - im_res_val
 
-im_pwrap_val = np.reshape(pwrap_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_res_val = np.reshape(preds_val[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_orig_val = np.reshape(orig_val_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_ctrl_val = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_val, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
-
-im_pwrap_test = np.reshape(pwrap_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_res_test = np.reshape(preds_test[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_orig_test = np.reshape(orig_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_ctrl_test = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_test, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
+test_results = np.zeros(5, IMG_WIDTH, IMG_HEIGHT)
+test_results[1] = im_pwrap_test = np.reshape(pwrap_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+test_results[2] = im_res_test = np.reshape(preds_test[ix], (IMG_HEIGHT, IMG_WIDTH))
+test_results[3] = im_orig_test = np.reshape(orig_test_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+test_results[4] = im_ctrl_test = np.reshape(unwrap_phase(exposure.rescale_intensity(im_pwrap_test, (-np.pi, np.pi))), (IMG_HEIGHT, IMG_WIDTH))
+test_results[5] = test_diff = im_orig_test - im_orig_test
 
 print('Saving Results...')
 
@@ -100,5 +120,9 @@ fig.colorbar(ax4.imshow(im_ctrl_test, cmap='gray'), ax=ax4)
 ax4.set_title('py Unwrapped Image')
 plt.show()
 plt.savefig('/home/563/ls1729/gdata/phase_unwrapping/samples/test_sample.jpg', bbox_inches='tight')
+
+write_images(train_results, 1)
+write_images(val_results, 2)
+write_images(test_results, 3)
 
 print('Complete..!')

@@ -2,7 +2,9 @@
 # some helper functions for the main modules
 
 # import libraries
-
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 import tensorflow as tf
@@ -69,4 +71,29 @@ def get_args():
     args = parser.parse_args()
 
     return args
+
+
+def write_images(data, flag):
+    n = np.size(data, 0)
+
+    if flag == 1 :
+        dict = {0:'train_phase_wrapped', 1:'train_unet_unwrapped', 2:'train_original', 3:'train_py_unwrapped', 4:'train_diff'}
+
+    if flag == 2 :
+        dict = {0:'val_phase wrapped', 1:'val_unet_unwrapped', 2:'val_original', 3:'val_py_unwrapped', 4:'val_diff'}
+
+    if flag == 3 :
+        dict = {0:'test_phase wrapped', 1:'test_unet_unwrapped', 2:'test_original', 3:'test_py_unwrapped', 4:'test_diff'}
+
+    for i in range(n):
+        im = data[i]
+        plt.imsave(dict[i], im)
+
+
+def compute_ssd(X, Y):
+    return np.mean(np.sum(np.square(X-Y), axis=(1, 2)))
+
+
+def compute_diff(X,Y):
+    return np.mean(np.sum(X-Y, axis=(1, 2)))
 
