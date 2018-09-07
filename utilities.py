@@ -87,7 +87,7 @@ def write_images(data, flag):
 
     for i in range(n):
         im = data[i]
-        plt.imsave(dict[i], im)
+        plt.imsave(dict[i], im, cmap='gray')
 
 
 def compute_ssd(X, Y):
