@@ -10,7 +10,7 @@ import numpy as np
 import tensorflow as tf
 import h5py
 import argparse
-
+import keras.backend as K
 
 # define the helper functions
 
@@ -97,3 +97,7 @@ def compute_ssd(X, Y):
 def compute_diff(X,Y):
     return np.mean(np.sum(X-Y, axis=(1, 2)))
 
+def rescale(x):
+    X_std = (x - K.min(x))/(K.max(x) - K.min(x))
+    X_scaled = X_std * (1 - (-1)) + -1
+    return X_scaled
