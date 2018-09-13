@@ -7,6 +7,7 @@ import random
 from keras.models import *
 from utilities import load_h5py_datasets
 import argparse
+import nibabel as nib
 
 # parse some arguments
 parser = argparse.ArgumentParser(description='Predict real qsm data using the trained model')
@@ -43,28 +44,30 @@ print('Making predictions on real qsm data...')
 
 # Predict on train, val and test
 model = load_model(WEIGHT_DIR)
-pred_images = model.predict(pwrap_images[80:91], verbose=1)
+pred_images = model.predict(pwrap_images, verbose=1)
 
 # compute the error
 
-
-ix = random.randint(0, np.size(pred_images, 0)-1)
-
-im_pwrap = np.reshape(pwrap_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_pred = np.reshape(pred_images[ix], (IMG_HEIGHT, IMG_WIDTH))
-im_unwrap = np.reshape(unwrap_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+# ix = random.randint(0, np.size(pred_images, 0)-1)
+#
+# im_pwrap = np.reshape(pwrap_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+# im_pred = np.reshape(pred_images[ix], (IMG_HEIGHT, IMG_WIDTH))
+# im_unwrap = np.reshape(unwrap_images[ix], (IMG_HEIGHT, IMG_WIDTH))
 
 print('Saving Results...')
 
-fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
-ax1, ax2, ax3 = ax.ravel()
-fig.colorbar(ax1.imshow(im_pwrap, cmap='gray'), ax=ax1)
-ax1.set_title('Wrapped Image')
-fig.colorbar(ax2.imshow(im_pred, cmap='gray'), ax=ax2)
-ax2.set_title('Unwrapped Image - UNET')
-fig.colorbar(ax3.imshow(im_unwrap, cmap='gray'), ax=ax3)
-ax3.set_title('Unwrapped Image - LM')
-plt.savefig(SAVE_PATH)
+img = nib.Nifti1Image(pred_images)
+img.to_filename(SAVE_PATH)
+
+# fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
+# ax1, ax2, ax3 = ax.ravel()
+# fig.colorbar(ax1.imshow(im_pwrap, cmap='gray'), ax=ax1)
+# ax1.set_title('Wrapped Image')
+# fig.colorbar(ax2.imshow(im_pred, cmap='gray'), ax=ax2)
+# ax2.set_title('Unwrapped Image - UNET')
+# fig.colorbar(ax3.imshow(im_unwrap, cmap='gray'), ax=ax3)
+# ax3.set_title('Unwrapped Image - LM')
+# plt.savefig(SAVE_PATH)
 
 
 

@@ -7,7 +7,7 @@ from skimage.restoration import unwrap_phase
 # Load an image as a floating-point grayscale
 image = color.rgb2gray(img_as_float(data.chelsea()))
 # Scale the image to [0, 4*pi]
-image = exposure.rescale_intensity(image, out_range=(-6, 6))
+image = exposure.rescale_intensity(image, out_range=(0, 10*np.pi))
 # Create a phase-wrapped image in the interval [-pi, pi)
 image_wrapped = np.angle(np.exp(1j * image))
 # Perform phase unwrapping
