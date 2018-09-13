@@ -56,7 +56,7 @@ pred_images = model.predict(pwrap_images[70:91], verbose=1)
 
 print('Saving Results...')
 
-img = nib.Nifti1Image(pred_images)
+img = nib.Nifti1Image(pred_images, np.eye(4))
 img.to_filename(SAVE_PATH)
 
 # fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
