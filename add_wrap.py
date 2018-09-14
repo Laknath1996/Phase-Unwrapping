@@ -85,7 +85,7 @@ for i in range(np.size(train_images, 0)):
 
     for j in range(NO_WRAPS):
         # rescale the pixel values
-        orig_im = exposure.rescale_intensity(im, out_range=(LOW[j], HIGH[j]))
+        orig_im = exposure.rescale_intensity(im, out_range=(0, HIGH[j]))
         # wrap around -pi and pi
         wrap_im = np.angle(np.exp(1j * orig_im))
 
