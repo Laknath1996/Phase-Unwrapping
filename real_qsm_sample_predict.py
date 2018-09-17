@@ -46,7 +46,7 @@ print('Making predictions on real qsm data...')
 pwrap = pwrap_images[70:91]
 model = load_model(WEIGHT_DIR)
 pred_images = model.predict(pwrap_images[70:91], verbose=1)
-pred_images_nii = np.reshape(pred_images, (np.size(pwrap_images, 1), np.size(pwrap_images, 2), np.size(pwrap, 0)))
+#pred_images_nii = np.reshape(pred_images, (np.size(pwrap_images, 1), np.size(pwrap_images, 2), np.size(pwrap, 0)))
 
 # compute the error
 
@@ -58,7 +58,7 @@ pred_images_nii = np.reshape(pred_images, (np.size(pwrap_images, 1), np.size(pwr
 
 print('Saving Results...')
 
-img = nib.Nifti1Image(pred_images_nii, np.eye(3))
+img = nib.Nifti1Image(pred_images, np.eye(4))
 img.to_filename(SAVE_PATH)
 
 # fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
