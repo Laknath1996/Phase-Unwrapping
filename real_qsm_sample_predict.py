@@ -46,7 +46,7 @@ print('Making predictions on real qsm data...')
 pwrap = pwrap_images[70:91]
 model = load_model(WEIGHT_DIR)
 pred_images = model.predict(pwrap_images[70:91], verbose=1)
-pred_images = np.reshape(pred_images, (np.size(pwrap_images, 1), np.size(pwrap_images, 2), np.size(pwrap, 0)))
+# pred_images = np.reshape(pred_images, (np.size(pwrap_images, 1), np.size(pwrap_images, 2), np.size(pwrap, 0)))
 
 # compute the error
 
