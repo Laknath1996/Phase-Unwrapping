@@ -58,7 +58,7 @@ pred_images_nii = np.reshape(pred_images, (np.size(pwrap_images, 1), np.size(pwr
 
 print('Saving Results...')
 
-img = nib.Nifti1Image(pred_images_nii, np.eye(4))
+img = nib.Nifti1Image(pred_images_nii, np.eye(3))
 img.to_filename(SAVE_PATH)
 
 # fig, ax = plt.subplots(1, 3, sharex=True, sharey=True)
