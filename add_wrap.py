@@ -26,7 +26,7 @@ args = parser.parse_args()
 NATURAL_DATASET_PATH = args.nat_path  # '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/natural_dataset.hdf5'
 PWRAP_DATASET_PATH = args.pwrap_path  # '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/pwrap_dataset.hdf5'
 ORIGINAL_DATASET_PATH = args.orig_path
-INTENSITY_RESCALE_WINDOW = (-30, 30)
+INTENSITY_RESCALE_WINDOW = (-30, 50)
 NO_WRAPS = 100;
 SIZE = (512, 512)
 
@@ -112,7 +112,7 @@ for i in range(np.size(val_images, 0)):
 
     for j in range(NO_WRAPS):
         # rescale the pixel values
-        orig_im = exposure.rescale_intensity(im, out_range=(LOW[j], HIGH[j]))
+        orig_im = exposure.rescale_intensity(im, out_range=(0, HIGH[j]))
         # wrap around -pi and pi
         wrap_im = np.angle(np.exp(1j * orig_im))
 
@@ -139,7 +139,7 @@ for i in range(np.size(test_images, 0)):
 
     for j in range(NO_WRAPS):
         # rescale the pixel values
-        orig_im = exposure.rescale_intensity(im, out_range=(LOW[j], HIGH[j]))
+        orig_im = exposure.rescale_intensity(im, out_range=(0, HIGH[j]))
         # wrap around -pi and pi
         wrap_im = np.angle(np.exp(1j * orig_im))
 
