@@ -10,7 +10,7 @@ from shutil import copyfile
 # define useful params
 IMGS_PER_CAT = 10
 DATA_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/val2017/'
-SAVE_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/images_2/'
+SAVE_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/images_2'
 
 # get the annotation file path
 annFile = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/annotations/instances_val2017.json'
