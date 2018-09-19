@@ -4,7 +4,7 @@
 # pick 5 categories and take 10 images out of each category and create a base image set of 50 images
 
 # import libraries
-from coco import COCO
+from pycocotools.coco import COCO
 from shutil import copyfile
 
 # define useful params
