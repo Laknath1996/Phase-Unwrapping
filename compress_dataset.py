@@ -10,8 +10,8 @@ import cv2
 
 # define some useful parameters
 
-IMAGES_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/images_1/*.jpg'
-DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/natural_dataset_1.hdf5'
+IMAGES_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/images_2/*.jpg'
+DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/orig/natural_dataset_2.hdf5'
 SIZE = (512, 512)
 
 # read addresses and labels from the 'train' folder
