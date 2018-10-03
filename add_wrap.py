@@ -27,8 +27,10 @@ NATURAL_DATASET_PATH = args.nat_path  # '/home/563/ls1729/gdata/phase_unwrapping
 PWRAP_DATASET_PATH = args.pwrap_path  # '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/pwrap_dataset.hdf5'
 ORIGINAL_DATASET_PATH = args.orig_path
 INTENSITY_RESCALE_WINDOW = (-30, 50)
-NO_WRAPS = 100;
+NO_WRAPS = 100
 SIZE = (512, 512)
+RESIZE = True
+NEW_SIZE = (160, 160)
 
 # print the args
 print('NATURAL_DATASET_PATH : ', NATURAL_DATASET_PATH)
@@ -36,6 +38,11 @@ print('PWRAP_DATASET_PATH : ', PWRAP_DATASET_PATH)
 print('ORIGINAL_DATASET_PATH : ', ORIGINAL_DATASET_PATH)
 print('INTENSITY_RESCALE_WINDOW : ',INTENSITY_RESCALE_WINDOW)
 print('SIZE : ', SIZE)
+print('RESIZE? :', RESIZE)
+if RESIZE:
+    print('NEW SIZE', NEW_SIZE)
+else:
+    NEW_SIZE = SIZE
 print('\n')
 
 # load the dataset
@@ -44,7 +51,6 @@ train_dataset = h5py.File(NATURAL_DATASET_PATH, "r")
 train_images = train_dataset["train_img"]
 train_images = np.array(train_images, dtype=np.float32)
 train_shape = (np.size(train_images, 0)*NO_WRAPS, np.size(train_images, 1), np.size(train_images, 2), np.size(train_images, 3))
-
 
 val_dataset = h5py.File(NATURAL_DATASET_PATH, "r")
 val_images = val_dataset["val_img"]
@@ -80,6 +86,9 @@ for i in range(np.size(train_images, 0)):
     im = train_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
+    if RESIZE:
+        im = resize(im, NEW_SIZE)
+
     #if i % 500 == 0 and i > 1:
     print('Train data: {}/{}'.format(i+1, train_shape[0]/NO_WRAPS))
 
@@ -92,8 +101,8 @@ for i in range(np.size(train_images, 0)):
         # normalize and reshape the images
         orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
         wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
-        wrap_im = np.reshape(wrap_im, (SIZE[0], SIZE[1], 1))
-        orig_im = np.reshape(orig_im, (SIZE[0], SIZE[1], 1))
+        wrap_im = np.reshape(wrap_im, (NEW_SIZE[0], NEW_SIZE[1], 1))
+        orig_im = np.reshape(orig_im, (NEW_SIZE[0], NEW_SIZE[1], 1))
 
         # save the images in the h5 file
         original_dataset_file["train_img"][k, ...] = orig_im[None]
@@ -107,6 +116,9 @@ for i in range(np.size(val_images, 0)):
     im = val_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
+    if RESIZE:
+        im = resize(im, NEW_SIZE)
+
     #if i % 500 == 0 and i > 1:
     print('Validation data: {}/{}'.format(i+1, val_shape[0]/NO_WRAPS))
 
@@ -119,8 +131,8 @@ for i in range(np.size(val_images, 0)):
         # normalize and reshape the images
         orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
         wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
-        wrap_im = np.reshape(wrap_im, (SIZE[0], SIZE[1], 1))
-        orig_im = np.reshape(orig_im, (SIZE[0], SIZE[1], 1))
+        wrap_im = np.reshape(wrap_im, (NEW_SIZE[0], NEW_SIZE[1], 1))
+        orig_im = np.reshape(orig_im, (NEW_SIZE[0], NEW_SIZE[1], 1))
 
         # save the images in the h5 file
         original_dataset_file["val_img"][k, ...] = orig_im[None]
@@ -134,6 +146,9 @@ for i in range(np.size(test_images, 0)):
     im = test_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
+    if RESIZE:
+        im = resize(im, NEW_SIZE)
+
     #if i % 500 == 0 and i > 1:
     print('Test data: {}/{}'.format(i+1, test_shape[0]/NO_WRAPS))
 
@@ -146,8 +161,8 @@ for i in range(np.size(test_images, 0)):
         # normalize and reshape the images
         orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
         wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
-        wrap_im = np.reshape(wrap_im, (SIZE[0], SIZE[1], 1))
-        orig_im = np.reshape(orig_im, (SIZE[0], SIZE[1], 1))
+        wrap_im = np.reshape(wrap_im, (NEW_SIZE[0], NEW_SIZE[1], 1))
+        orig_im = np.reshape(orig_im, (NEW_SIZE[0], NEW_SIZE[1], 1))
 
         # save the images in the h5 file
         original_dataset_file["test_img"][k, ...] = orig_im[None]
