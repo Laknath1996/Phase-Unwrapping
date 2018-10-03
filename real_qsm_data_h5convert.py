@@ -20,9 +20,9 @@ from skimage import transform
 # args = parser.parse_args()
 
 # define some useful parameters
-NII_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/qsm_2016_data/phs_unwrap.nii'
-NATURAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/qsm_2016_data/phs_unwrap.hdf5'
-SIZE = (512, 512)
+NII_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/qsm_2016_data/phs_wrap.nii'
+NATURAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/qsm_2016_data/phs_wrap_1.hdf5'
+SIZE = (160, 160)
 
 # print the args
 print('NII_DATASET_PATH : ', NII_DATASET_PATH)
@@ -49,7 +49,7 @@ for i in range(data_shape[0]):
     print('Train data: {}/{}'.format(i+1, data_shape[0]))
     # read an image and resize
     img = data[:, :, i]
-    img = cv2.resize(img, SIZE, interpolation=cv2.INTER_CUBIC)
+    # img = cv2.resize(img, SIZE, interpolation=cv2.INTER_CUBIC)
     img = exposure.rescale_intensity(img, out_range=(-1, 1))
     img = transform.rotate(img, 180)
     img = np.reshape(img, (SIZE[0], SIZE[1], 1))

@@ -22,8 +22,8 @@ parser.add_argument('--weight_path', type=str,
 args = parser.parse_args()
 
 # define some useful parameters
-IMG_HEIGHT = 512
-IMG_WIDTH = 512
+IMG_HEIGHT = 160
+IMG_WIDTH = 160
 WEIGHT_DIR = args.weight_path  # '/home/563/ls1729/gdata/phase_unwrapping/weights/PU_unet_002.hdf5'
 PWRAP_DATASET_PATH = args.pwrap_path  # '/home/563/ls1729/gdata/phase_unwrapping/dataset/coco/pwrap/pwrap_dataset.hdf5'
 ORIG_DATASET_PATH = args.orig_path
