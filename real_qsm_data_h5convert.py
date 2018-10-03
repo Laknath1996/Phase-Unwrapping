@@ -20,8 +20,8 @@ from skimage import transform
 # args = parser.parse_args()
 
 # define some useful parameters
-NII_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/qsm_2016_data/phs_wrap.nii'
-NATURAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/qsm_2016_data/phs_wrap_1.hdf5'
+NII_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/qsm_2016_data/phs_unwrap.nii'
+NATURAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/qsm_2016_data/phs_unwrap_1.hdf5'
 SIZE = (160, 160)
 
 # print the args
@@ -59,3 +59,4 @@ for i in range(data_shape[0]):
 
 dataset_file.close()
 
+print('Complete!')
