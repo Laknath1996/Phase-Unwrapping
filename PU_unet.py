@@ -37,8 +37,8 @@ import random
 args = get_args()
 
 #Define Parameters
-IMG_HEIGHT = 512
-IMG_WIDTH = 512
+IMG_HEIGHT = 160
+IMG_WIDTH = 160
 IMG_CHANNELS = 1
 BATCH_SIZE = args.batch_size
 LEARNING_RATE = 1e-4
