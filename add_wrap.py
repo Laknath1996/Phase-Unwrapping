@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import h5py
 import argparse
+import cv2
 
 # pass some arguments
 parser = argparse.ArgumentParser(description='Create training, validating and testing datasets with desired phase wraps.')
@@ -87,7 +88,7 @@ for i in range(np.size(train_images, 0)):
     im = np.reshape(im, SIZE)
 
     if RESIZE:
-        im = resize(im, NEW_SIZE)
+        im = cv2.resize(im, NEW_SIZE, interpolation=cv2.INTER_CUBIC)
 
     #if i % 500 == 0 and i > 1:
     print('Train data: {}/{}'.format(i+1, train_shape[0]/NO_WRAPS))
@@ -117,7 +118,7 @@ for i in range(np.size(val_images, 0)):
     im = np.reshape(im, SIZE)
 
     if RESIZE:
-        im = resize(im, NEW_SIZE)
+        im = cv2.resize(im, NEW_SIZE, interpolation=cv2.INTER_CUBIC)
 
     #if i % 500 == 0 and i > 1:
     print('Validation data: {}/{}'.format(i+1, val_shape[0]/NO_WRAPS))
@@ -147,7 +148,7 @@ for i in range(np.size(test_images, 0)):
     im = np.reshape(im, SIZE)
 
     if RESIZE:
-        im = resize(im, NEW_SIZE)
+        im = cv2.resize(im, NEW_SIZE, interpolation=cv2.INTER_CUBIC)
 
     #if i % 500 == 0 and i > 1:
     print('Test data: {}/{}'.format(i+1, test_shape[0]/NO_WRAPS))
