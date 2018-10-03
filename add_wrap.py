@@ -51,17 +51,17 @@ print('Loading the original dataset...')
 train_dataset = h5py.File(NATURAL_DATASET_PATH, "r")
 train_images = train_dataset["train_img"]
 train_images = np.array(train_images, dtype=np.float32)
-train_shape = (np.size(train_images, 0)*NO_WRAPS, np.size(train_images, 1), np.size(train_images, 2), np.size(train_images, 3))
+train_shape = (np.size(train_images, 0)*NO_WRAPS, NEW_SIZE[0], NEW_SIZE[1], 1)
 
 val_dataset = h5py.File(NATURAL_DATASET_PATH, "r")
 val_images = val_dataset["val_img"]
 val_images = np.array(val_images, dtype=np.float32)
-val_shape = (np.size(val_images, 0)*NO_WRAPS, np.size(val_images, 1), np.size(val_images, 2), np.size(val_images, 3))
+val_shape = (np.size(val_images, 0)*NO_WRAPS, NEW_SIZE[0], NEW_SIZE[1], 1)
 
 test_dataset = h5py.File(NATURAL_DATASET_PATH, "r")
 test_images = test_dataset["test_img"]
 test_images = np.array(test_images, dtype=np.float32)
-test_shape = (np.size(test_images, 0)*NO_WRAPS, np.size(test_images, 1), np.size(test_images, 2), np.size(test_images, 3))
+test_shape = (np.size(test_images, 0)*NO_WRAPS, NEW_SIZE[0], NEW_SIZE[1], 1)
 
 # open a hdf5 file and create earrays
 print('creating the dataset with phase wraps...')
