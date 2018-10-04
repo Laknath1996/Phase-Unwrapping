@@ -142,7 +142,7 @@ for i in range(np.size(train_images, 0)):
 
 print('saving the validation set with phase wraps')
 k = 0
-for i in range(np.size(train_images, 0)):
+for i in range(np.size(val_images, 0)):
     im = train_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
@@ -175,7 +175,7 @@ for i in range(np.size(train_images, 0)):
 
 print('saving the test set with phase wraps')
 k = 0
-for i in range(np.size(train_images, 0)):
+for i in range(np.size(test_images, 0)):
     im = train_images[i, :, :, :]
     im = np.reshape(im, SIZE)
 
