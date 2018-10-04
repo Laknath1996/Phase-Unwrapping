@@ -50,6 +50,9 @@ print('LOWER BOUND ZERO? :', LOWER_BOUND_ZERO)
 if RANDOM_RESCALING:
     print('INTENSITY_RESCALE_WINDOW : ',INTENSITY_RESCALE_WINDOW)
     print('NUMBER OF WRAPS : ', NO_WRAPS)
+else:
+    print('LOWER BOUNDS : ', LOWER_BOUNDS)
+    print('HIGHER BOUNDS : ', HIGHER_BOUNDS)
 print('RESIZE? :', RESIZE)
 if RESIZE:
     print('NEW SIZE', NEW_SIZE)
@@ -129,7 +132,7 @@ for i in range(np.size(train_images, 0)):
         for m in range(len(LOW)):
             for n in range(len(HIGH)):
                 # add wraps
-                orig_im, wrap_im = wrap_images(im, LOW[j], HIGH[j], NEW_SIZE)
+                orig_im, wrap_im = wrap_images(im, LOW[m], HIGH[n], NEW_SIZE)
 
                 # save the images in the h5 file
                 original_dataset_file["train_img"][k, ...] = orig_im[None]
@@ -162,7 +165,7 @@ for i in range(np.size(train_images, 0)):
         for m in range(len(LOW)):
             for n in range(len(HIGH)):
                 # add wraps
-                orig_im, wrap_im = wrap_images(im, LOW[j], HIGH[j], NEW_SIZE)
+                orig_im, wrap_im = wrap_images(im, LOW[m], HIGH[n], NEW_SIZE)
 
                 # save the images in the h5 file
                 original_dataset_file["val_img"][k, ...] = orig_im[None]
@@ -195,7 +198,7 @@ for i in range(np.size(train_images, 0)):
         for m in range(len(LOW)):
             for n in range(len(HIGH)):
                 # add wraps
-                orig_im, wrap_im = wrap_images(im, LOW[j], HIGH[j], NEW_SIZE)
+                orig_im, wrap_im = wrap_images(im, LOW[m], HIGH[n], NEW_SIZE)
 
                 # save the images in the h5 file
                 original_dataset_file["test_img"][k, ...] = orig_im[None]
