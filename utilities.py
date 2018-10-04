@@ -11,7 +11,7 @@ import tensorflow as tf
 import h5py
 import argparse
 import keras.backend as K
-
+from skimage import exposure
 # define the helper functions
 
 def load_image(addr, size):
@@ -97,7 +97,23 @@ def compute_ssd(X, Y):
 def compute_diff(X,Y):
     return np.mean(np.sum(X-Y, axis=(1, 2)))
 
+
 def rescale(x):
     X_std = (x - K.min(x))/(K.max(x) - K.min(x))
     X_scaled = X_std * (1 - (-1)) + -1
     return X_scaled
+
+
+def wrap_images(im,low, high, size):
+    # rescale the pixel values
+    orig_im = exposure.rescale_intensity(im, out_range=(low, high))
+    # wrap around -pi and pi
+    wrap_im = np.angle(np.exp(1j * orig_im))
+
+    # normalize and reshape the images
+    orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
+    wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
+    wrap_im = np.reshape(wrap_im, (size[0], size[1], 1))
+    orig_im = np.reshape(orig_im, (size[0], size[1], 1))
+
+    return orig_im, orig_im
