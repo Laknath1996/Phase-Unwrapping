@@ -116,4 +116,4 @@ def wrap_images(im,low, high, size):
     wrap_im = np.reshape(wrap_im, (size[0], size[1], 1))
     orig_im = np.reshape(orig_im, (size[0], size[1], 1))
 
-    return orig_im, orig_im
+    return orig_im, wrap_im
