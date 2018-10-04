@@ -150,7 +150,7 @@ for i in range(np.size(train_images, 0)):
         im = cv2.resize(im, NEW_SIZE, interpolation=cv2.INTER_CUBIC)
 
     #if i % 500 == 0 and i > 1:
-    print('Validation data: {}/{}'.format(i+1, train_shape[0]/NO_WRAPS))
+    print('Validation data: {}/{}'.format(i+1, val_shape[0]/NO_WRAPS))
 
     if RANDOM_RESCALING:
         for j in range(NO_WRAPS):
@@ -183,7 +183,7 @@ for i in range(np.size(train_images, 0)):
         im = cv2.resize(im, NEW_SIZE, interpolation=cv2.INTER_CUBIC)
 
     #if i % 500 == 0 and i > 1:
-    print('Test data: {}/{}'.format(i+1, train_shape[0]/NO_WRAPS))
+    print('Test data: {}/{}'.format(i+1, test_shape[0]/NO_WRAPS))
 
     if RANDOM_RESCALING:
         for j in range(NO_WRAPS):
