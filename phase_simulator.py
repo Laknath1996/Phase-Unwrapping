@@ -11,8 +11,8 @@ from skimage.restoration import unwrap_phase
 import h5py
 
 # useful params
-PWRAP_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/brain_7T/pwrap/pwrap_dataset_1.hdf5'
-ORIGINAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/brain_7T/orig/orig_dataset_1.hdf5'
+PWRAP_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/brain_7T/pwrap/pwrap_dataset_2_2.hdf5'
+ORIGINAL_DATASET_PATH = '/home/563/ls1729/gdata/phase_unwrapping/dataset/brain_7T/orig/orig_dataset_2_2.hdf5'
 ARB = 25
 
 # load the dataset
