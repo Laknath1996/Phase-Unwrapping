@@ -34,8 +34,8 @@ RANDOM_RESCALING = False
 LOWER_BOUND_ZERO = True
 INTENSITY_RESCALE_WINDOW = (-50, 50)
 NO_WRAPS = 100
-LOWER_BOUNDS = [-4, -5, -6, -7, -8, -9, -10]
-HIGHER_BOUNDS = [4, 5, 6, 7, 8, 9, 10]
+LOWER_BOUNDS = [-4.5, -5, -5.5, -6, -6.5, -7, -7.5, -8, -8.5, -9, -9.5, -10]
+HIGHER_BOUNDS = [4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
 
 RESIZE = True
 NEW_SIZE = (160, 160)
