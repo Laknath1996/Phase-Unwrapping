@@ -77,8 +77,8 @@ def unet(input_shape):
     conv9 = Conv2D(64, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(conv9)
     conv9 = Conv2D(2, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(conv9)
     conv10 = Conv2D(1, 1, activation = 'relu')(conv9)
-    final = Lambda(rescale)(conv10)
+    # final = Lambda(rescale)(conv10)
 
-    model = Model(inputs = inputs, outputs = final)
+    model = Model(inputs = inputs, outputs = conv10)
 
     return model
