@@ -111,8 +111,8 @@ def wrap_images(im,low, high, size):
     wrap_im = np.angle(np.exp(1j * orig_im))
 
     # normalize and reshape the images
-    orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
-    wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
+    # orig_im = exposure.rescale_intensity(orig_im, out_range=(-1, 1))
+    # wrap_im = exposure.rescale_intensity(wrap_im, out_range=(-1, 1))
     wrap_im = np.reshape(wrap_im, (size[0], size[1], 1))
     orig_im = np.reshape(orig_im, (size[0], size[1], 1))
 
